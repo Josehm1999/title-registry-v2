@@ -8,7 +8,7 @@ import HouseLogo from '../../public/images/house-logo-unsplash.jpg';
 const Home: NextPage = () => {
   const session = useSession();
   return (
-    <div className='hero min-h-screen bg-blue-200'>
+    <div className='hero h-screen bg-blue-200'>
       <div className='hero-content flex-col lg:flex-row-reverse'>
         <Image
           src={HouseLogo}

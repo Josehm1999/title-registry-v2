@@ -37,7 +37,7 @@ const clientWagmi = createClient({
 
 const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
   return (
-    <div>
+    <>
       <Head>
         <title>Title Registry System</title>
         <meta name='title_registry_system' content='Title Registry System' />
@@ -55,7 +55,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
           </RainbowKitSiweNextAuthProvider>
         </SessionProvider>
       </WagmiConfig>
-    </div>
+    </>
   );
 };
 

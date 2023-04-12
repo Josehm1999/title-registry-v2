@@ -4,7 +4,6 @@ import { useMoralis, useWeb3Contract } from 'react-moralis';
 import Image from 'next/image';
 
 import title_registry_abi from '../../constants/TitleRegistry.json';
-import { Card, useNotification } from 'web3uikit';
 import { ethers } from 'ethers';
 
 type TitleBoxProps = {
