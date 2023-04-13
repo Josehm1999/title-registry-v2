@@ -32,7 +32,7 @@ const Admin: NextPage = () => {
 
 
   return (
-    <div className='flex h-screen flex-col items-center justify-center overflow-auto bg-blue-400 py-10'>
+    <div className='flex flex-col items-center justify-center overflow-auto bg-blue-400 py-10'>
       <NewPropertyForm />
       <RegionalAdminForm />
     </div>

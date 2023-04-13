@@ -35,10 +35,9 @@ type contractAddressesTitleInterface = {
 };
 
 export default function RegionalAdminForm() {
-	const { data } = useConnect();
 	const addresses: contractAddressesInterface = networkMapping;
-	const chainString = !!data?.chain.id ? data?.chain.id.toString() : '1337';
-	const titleAddress = addresses[chainString]!['TitleRegistry']![0];
+	// const chainString = data?.chain.id ? data?.chain.id.toString() : '1337';
+	const titleAddress = addresses['5']!['TitleRegistry']![0];
 
 	const {
 		register: registerAdmin,
@@ -49,7 +48,7 @@ export default function RegionalAdminForm() {
 	});
 
 	const { config } = usePrepareContractWrite({
-		address: `0x${titleAddress?.substring(1, titleAddress.length - 1)}`,
+		address: `0x${titleAddress?.substring(2, titleAddress.length)}`,
 		abi: titleAbi,
 		functionName: 'addRegionalAdmin',
 		args: ['0x2e3053A561d1Bd36c0ba511F4634101007bFb0c5', 'Barranco'],
