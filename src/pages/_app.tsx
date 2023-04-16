@@ -14,13 +14,14 @@ import { goerli } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
+import { env as env_server } from '../env/server.mjs';
 
 const { chains, provider } = configureChains(
 	[goerli],
 	[
-		infuraProvider({ apiKey: '61f78c792f9644ca9c51e25da788f73d' }),
+		infuraProvider({ apiKey: env_server.INFURA_ID }),
 		publicProvider(),
-		alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! }),
+		alchemyProvider({ apiKey: env_server.ALCHEMY_ID}),
 	]
 );
 

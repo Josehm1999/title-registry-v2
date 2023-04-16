@@ -2,14 +2,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { utils } from 'ethers';
 import { SubmitHandler as SubmitHandlerAdmin, useForm } from 'react-hook-form';
 import {
-	useConnect,
 	useContractWrite,
 	usePrepareContractWrite,
 	useWaitForTransaction,
 } from 'wagmi';
 import { z } from 'zod';
-import networkMapping from '../../constants/networkMapping.json';
 import titleAbi from '../../constants/TitleRegistry.json';
+import useDebounce from '../hooks/useDebounce';
 
 const regional_admin_schema = z.object({
 	admin_address: z
@@ -26,37 +25,35 @@ const regional_admin_schema = z.object({
 
 type InputsAdmin = z.infer<typeof regional_admin_schema>;
 
-type contractAddressesInterface = {
-	[key: string]: contractAddressesTitleInterface;
-};
 
-type contractAddressesTitleInterface = {
-	[key: string]: string[];
-};
-
-export default function RegionalAdminForm() {
-	const addresses: contractAddressesInterface = networkMapping;
-	// const chainString = data?.chain.id ? data?.chain.id.toString() : '1337';
-	const titleAddress = addresses['5']!['TitleRegistry']![0];
-
+export default function RegionalAdminForm(titleAddress: string) {
 	const {
 		register: registerAdmin,
 		handleSubmit: handleSubmitAdmin,
+		watch,
 		formState: { errors: errorsAdmin },
 	} = useForm<InputsAdmin>({
+		mode: 'onChange',
 		resolver: zodResolver(regional_admin_schema),
 	});
+
+	const watch_admin_address = watch('admin_address', '');
+	const watch_district = watch('district', '');
+	const debounced_admin_address = useDebounce(watch_admin_address, 500);
+	const debounced_district = useDebounce(watch_admin_address, 500);
+
+	// '0x2e3053A561d1Bd36c0ba511F4634101007bFb0c5'
 
 	const { config } = usePrepareContractWrite({
 		address: `0x${titleAddress?.substring(2, titleAddress.length)}`,
 		abi: titleAbi,
 		functionName: 'addRegionalAdmin',
-		args: ['0x2e3053A561d1Bd36c0ba511F4634101007bFb0c5', 'Barranco'],
+		args: [watch_admin_address, watch_district],
+		enabled: Boolean(debounced_admin_address && debounced_district),
 	});
 
 	const { data: data_from_contract, write } = useContractWrite(config);
-
-	const { isLoading, isSuccess } = useWaitForTransaction({
+	const { isLoading, isSuccess, isError } = useWaitForTransaction({
 		hash: data_from_contract?.hash,
 	});
 
@@ -128,13 +125,19 @@ export default function RegionalAdminForm() {
 						{isLoading ? 'Enviando...' : 'Enviar'}
 					</button>
 					{isSuccess && (
-						<div>
-							Se creo con exito!
-							<div>
-								<a href={`https://etherscan.io/tx/${data_from_contract?.hash}`}>
-									Etherscan
-								</a>
-							</div>
+						<div className='text-gray-700'>
+							Se creo con exito! -
+							<a
+								href={`https://etherscan.io/tx/${data_from_contract?.hash}`}
+								className='text-blue-700'
+							>
+								Etherscan
+							</a>
+						</div>
+					)}
+					{isError && (
+						<div className='text-red-700'>
+							Ha ocurrido un error. Revise la información que ingreso.
 						</div>
 					)}
 				</div>

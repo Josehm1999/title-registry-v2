@@ -16,6 +16,8 @@ export const serverSchema = z.object({
       : z.string().min(1).optional(),
   NEXTAUTH_URL: z.string().min(1),
   ADMIN_ADDRESS: z.string().min(1),
+  ALCHEMY_ID: z.string().min(1),
+  INFURA_ID: z.string().min(1),
 });
 
 /**
@@ -31,6 +33,8 @@ export const serverEnv = {
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   ADMIN_ADDRESS: process.env.ADMIN_ADDRESS,
+  ALCHEMY_ID: process.env.ALCHEMY_ID,
+  INFURA_ID: process.env.INFURA_ID,
 };
 
 /**
@@ -43,7 +47,6 @@ export const clientSchema = z.object({
   NEXT_PUBLIC_SERVER_URL: z.string().min(1),
   NEXT_PUBLIC_GRAPH_LOCAL_NODE: z.string().min(1),
   NEXT_PUBLIC_GRAPH_REAL_NODE: z.string().min(1),
-  NEXT_PUBLIC_ALCHEMY_ID: z.string().min(1),
   NEXT_PUBLIC_ADMIN_ADDRESS: z.string().min(1),
 });
 
@@ -59,6 +62,5 @@ export const clientEnv = {
   NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
   NEXT_PUBLIC_GRAPH_LOCAL_NODE: process.env.NEXT_PUBLIC_GRAPH_LOCAL_NODE,
   NEXT_PUBLIC_GRAPH_REAL_NODE: process.env.NEXT_PUBLIC_GRAPH_REAL_NODE,
-  NEXT_PUBLIC_ALCHEMY_ID: process.env.NEXT_PUBLIC_ALCHEMY_ID,
   NEXT_PUBLIC_ADMIN_ADDRESS: process.env.NEXT_PUBLIC_ADMIN_ADDRESS,
 };
