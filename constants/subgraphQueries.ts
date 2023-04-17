@@ -34,8 +34,7 @@ export const bought_properties = gql`
   }
 `;
 
-export const regional_admins = gql`
-  {
+export const regional_admins = gql` {
     regionalAdmins(first: 5) {
       id
       regionalAdmin
