@@ -20,6 +20,8 @@ next-env.d.ts
 # production
 /build
 
+/src/__generated__/
+
 # misc
 .DS_Store
 *.pem
@@ -40,3 +42,5 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+codegen.ts
