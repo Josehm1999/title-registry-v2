@@ -1,16 +1,49 @@
 import { gql, TypedDocumentNode } from '@apollo/client';
 
-type RocketInventoryData = {
-  rocketInventory: RocketInventoryVars[];
+type RegionalAdmins = {
+  regionalAdmins: RegionalAdmin[];
 };
 
-type RocketInventoryVars = {
-  year: number;
+type RegionalAdmin = {
+  type_name: string;
+  id: string;
+  regionalAdmin: string;
+  district: string;
+};
+
+type PropertyListeds = {
+  propertyListeds: ListedProperty[];
+};
+
+type ListedProperty = {
+  id: string;
+  state: string;
+  neighborhood: string;
+  surveyNumber: string;
+  seller: string;
+  marketValue: string;
+  isAvailable: boolean;
+  requester: string;
+  ReqStatus: string;
+  updatedAt: string;
+};
+
+type BoughtProperties = {
+  bought_properties: BoughtPropertie[];
+};
+
+type BoughtPropertie = {
+  id: string;
+  seller: string;
+  buyer: string;
+  surveyNumber: string;
+  marketValue: string;
+  updatedAt: string;
 };
 
 export const listed_properties: TypedDocumentNode<
-  RocketInventoryData,
-  RocketInventoryVars
+  PropertyListeds,
+  ListedProperty
 > = gql`
   {
     propertyListeds(
@@ -32,7 +65,10 @@ export const listed_properties: TypedDocumentNode<
   }
 `;
 
-export const bought_properties = gql`
+export const bought_properties: TypedDocumentNode<
+  BoughtProperties,
+  BoughtProperties
+> = gql`
   {
     propertyBoughts(first: 5) {
       id
@@ -46,8 +82,8 @@ export const bought_properties = gql`
 `;
 
 export const regional_admins: TypedDocumentNode<
-  RocketInventoryData,
-  RocketInventoryVars
+  RegionalAdmins,
+  RegionalAdmin
 > = gql`
   {
     regionalAdmins(first: 5) {

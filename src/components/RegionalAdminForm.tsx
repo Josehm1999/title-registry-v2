@@ -38,8 +38,8 @@ export default function RegionalAdminForm(props: { titleAddress: string }) {
 
     const watch_admin_address = watch('admin_address', '');
     const watch_district = watch('district', '');
-    const debounced_admin_address = useDebounce(watch_admin_address, 500);
-    const debounced_district = useDebounce(watch_admin_address, 500);
+    const debounced_admin_address = useDebounce(watch_admin_address, 1000);
+    const debounced_district = useDebounce(watch_admin_address, 1000);
 
     // '0x2e3053A561d1Bd36c0ba511F4634101007bFb0c5'
 

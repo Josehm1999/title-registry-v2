@@ -11,6 +11,7 @@ import NewPropertyForm from '../components/NewPropertyForm';
 import networkMapping from '../../constants/networkMapping.json';
 import { graphqlClient } from './_app';
 import { regional_admins } from '../../constants/subgraphQueries';
+import { Session } from 'next-auth';
 
 type contractAddressesInterface = {
   [key: string]: contractAddressesTitleInterface;
@@ -20,18 +21,16 @@ type contractAddressesTitleInterface = {
   [key: string]: string[];
 };
 
-type regionalAdmin = {
-  type_name: string;
-  id: string;
-  regional_admin: string;
-  district: string;
+type Props = {
+  session?: Session;
+  isAdmin: boolean;
+  isRegionalAdmin: boolean;
 };
 
-const Admin: NextPage = () => {
+const Admin: NextPage<Props> = ({ session, isAdmin, isRegionalAdmin }) => {
   // First we wait for the component to render to check for the address
   const { disconnect } = useDisconnect();
   const mounted = useIsMounted();
-  const session = useSession();
   const { address } = useAccount();
 
   const addresses: contractAddressesInterface = networkMapping;
@@ -45,16 +44,16 @@ const Admin: NextPage = () => {
 
   useEffect(() => {
     if (mounted) {
-      if (address != session.data?.address) {
+      if (address != session?.address) {
         handleSignout();
       }
     }
   }, [address]);
 
   return (
-    <div className='flex flex-col items-center justify-center overflow-auto bg-blue-400 py-10'>
+    <div className='h-screen flex flex-col items-center justify-center overflow-auto bg-blue-400 py-10'>
       <NewPropertyForm titleAddress={contractAddress} />
-      <RegionalAdminForm titleAddress={contractAddress} />
+      {isAdmin && <RegionalAdminForm titleAddress={contractAddress} />}
     </div>
   );
 };
@@ -65,14 +64,12 @@ export async function getServerSideProps(context: NextPageContext) {
   const result_admins = await graphqlClient.query({ query: regional_admins });
   const session = await getSession(context);
 
-  console.log(result_admins.data.regionalAdmins);
-  if (
-    !session ||
-    session!.address != env.ADMIN_ADDRESS ||
-    !result_admins.data.regionalAdmins.some(
-      (address: regionalAdmin) => address.regional_admin === session!.address
-    )
-  ) {
+  const isAdmin = session!.address == env.ADMIN_ADDRESS;
+  const isRegionalAdmin = result_admins.data.regionalAdmins.some(
+    (address) => address.regionalAdmin === session!.address.toLowerCase()
+  );
+
+  if (!session || (!isAdmin && !isRegionalAdmin)) {
     return {
       redirect: {
         destination: '/',
@@ -81,6 +78,6 @@ export async function getServerSideProps(context: NextPageContext) {
     };
   }
   return {
-    props: {},
+    props: { session, isAdmin, isRegionalAdmin },
   };
 }

@@ -18,11 +18,11 @@ export default function Header() {
   const handleLogout = useProtected();
   const session = useSession();
   const isAdmin = session.data?.address === env.NEXT_PUBLIC_ADMIN_ADDRESS;
-  const {
-    loading,
-    error: subgraphQueryError,
-    data: regional_admins,
-  } = useQuery(regional_admins_query );
+  // const {
+  //   loading,
+  //   error: subgraphQueryError,
+  //   data: regional_admins,
+  // } = useQuery(regional_admins_query );
 
   // const is_regional_admin = regional_admins.some(
   //   (address: regionalAdmin) => address.regional_admin === session.data?.address
@@ -52,7 +52,7 @@ export default function Header() {
           Vender
         </Link>
 
-        {isAdmin && session.status === 'authenticated' ? (
+        {session.status === 'authenticated' ? (
           <Link
             href='/admin'
             className='mr-4 p-6 text-xl text-blue-700 hover:text-blue-400'
