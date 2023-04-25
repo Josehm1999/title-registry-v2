@@ -1,4 +1,3 @@
-import { ApolloQueryResult } from '@apollo/client';
 import { NextApiResponse, NextApiRequest } from 'next';
 import {
   RegionalAdmins,

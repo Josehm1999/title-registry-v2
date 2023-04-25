@@ -47,7 +47,7 @@ const Admin: NextPage<Props> = ({ session, isAdmin }) => {
   }, [address]);
 
   return (
-    <div className='flex h-screen flex-col items-center justify-center overflow-auto bg-blue-400 py-10'>
+    <div className='flex flex-col items-center justify-center overflow-auto bg-blue-400 py-10'>
       <NewPropertyForm titleAddress={contractAddress} />
       {isAdmin && <RegionalAdminForm titleAddress={contractAddress} />}
     </div>
