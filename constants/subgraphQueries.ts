@@ -1,21 +1,21 @@
 import { gql, TypedDocumentNode } from '@apollo/client';
 
-type RegionalAdmins = {
+export type RegionalAdmins = {
   regionalAdmins: RegionalAdmin[];
 };
 
-type RegionalAdmin = {
+export type RegionalAdmin = {
   type_name: string;
   id: string;
   regionalAdmin: string;
   district: string;
 };
 
-type PropertyListeds = {
+export type PropertyListeds = {
   propertyListeds: ListedProperty[];
 };
 
-type ListedProperty = {
+export type ListedProperty = {
   id: string;
   state: string;
   neighborhood: string;
@@ -28,11 +28,11 @@ type ListedProperty = {
   updatedAt: string;
 };
 
-type BoughtProperties = {
+export type BoughtProperties = {
   bought_properties: BoughtPropertie[];
 };
 
-type BoughtPropertie = {
+export type BoughtPropertie = {
   id: string;
   seller: string;
   buyer: string;

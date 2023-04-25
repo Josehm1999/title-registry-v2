@@ -1,10 +1,8 @@
-import { getSession, signOut, useSession } from 'next-auth/react';
+import { getSession, signOut } from 'next-auth/react';
 import { NextPage, NextPageContext } from 'next/types';
-import Image from 'next/image';
-import houseLogo from '../../public/images/house-logo-unsplash.jpg';
 import { useEffect } from 'react';
 import { useAccount, useDisconnect } from 'wagmi';
-import { env } from '../env/server.mjs';
+import { env } from '../env/client.mjs';
 import { useIsMounted } from '../hooks/isMounted';
 import RegionalAdminForm from '../components/RegionalAdminForm';
 import NewPropertyForm from '../components/NewPropertyForm';
@@ -27,14 +25,12 @@ type Props = {
   isRegionalAdmin: boolean;
 };
 
-const Admin: NextPage<Props> = ({ session, isAdmin, isRegionalAdmin }) => {
-  // First we wait for the component to render to check for the address
+const Admin: NextPage<Props> = ({ session, isAdmin }) => {
   const { disconnect } = useDisconnect();
   const mounted = useIsMounted();
   const { address } = useAccount();
 
   const addresses: contractAddressesInterface = networkMapping;
-  // const chainString = data?.chain.id ? data?.chain.id.toString() : '1337';
   const contractAddress = addresses['5']!['TitleRegistry']![0]!;
 
   const handleSignout = async () => {
@@ -51,7 +47,7 @@ const Admin: NextPage<Props> = ({ session, isAdmin, isRegionalAdmin }) => {
   }, [address]);
 
   return (
-    <div className='h-screen flex flex-col items-center justify-center overflow-auto bg-blue-400 py-10'>
+    <div className='flex h-screen flex-col items-center justify-center overflow-auto bg-blue-400 py-10'>
       <NewPropertyForm titleAddress={contractAddress} />
       {isAdmin && <RegionalAdminForm titleAddress={contractAddress} />}
     </div>
@@ -64,7 +60,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const result_admins = await graphqlClient.query({ query: regional_admins });
   const session = await getSession(context);
 
-  const isAdmin = session!.address == env.ADMIN_ADDRESS;
+  const isAdmin = session!.address == env.NEXT_PUBLIC_ADMIN_ADDRESS;
   const isRegionalAdmin = result_admins.data.regionalAdmins.some(
     (address) => address.regionalAdmin === session!.address.toLowerCase()
   );
@@ -78,6 +74,6 @@ export async function getServerSideProps(context: NextPageContext) {
     };
   }
   return {
-    props: { session, isAdmin, isRegionalAdmin },
+    props: { session, isAdmin },
   };
 }

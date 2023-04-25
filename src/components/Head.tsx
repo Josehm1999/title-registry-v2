@@ -1,34 +1,19 @@
 import Link from 'next/link';
-import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { env } from '../env/client.mjs';
-import { useSession } from 'next-auth/react';
+import { env } from '../env/server.mjs';
+import { getSession, useSession } from 'next-auth/react';
 import { useProtected } from '../hooks/useProtected';
-import { useQuery } from '@apollo/client';
-import { regional_admins as regional_admins_query } from '../../constants/subgraphQueries';
+import { regional_admins } from '../../constants/subgraphQueries';
 
-type regionalAdmin = {
-  type_name: string;
-  id: string;
-  regional_admin: string;
-  district: string;
+type Props = {
+  isAdmin: boolean;
+  isRegionalAdmin: boolean;
 };
 
-export default function Header() {
+export default function Header({ isAdmin, isRegionalAdmin }: Props) {
   const handleLogout = useProtected();
   const session = useSession();
-  const isAdmin = session.data?.address === env.NEXT_PUBLIC_ADMIN_ADDRESS;
-  // const {
-  //   loading,
-  //   error: subgraphQueryError,
-  //   data: regional_admins,
-  // } = useQuery(regional_admins_query );
 
-  // const is_regional_admin = regional_admins.some(
-  //   (address: regionalAdmin) => address.regional_admin === session.data?.address
-  // );
-
-  // console.log(!loading && !subgraphQueryError ? regionalAdmins : null);
   return (
     <nav className='flex flex-row items-center justify-between border-b-2 bg-white p-5'>
       <h1 className='py-4 px-4 text-3xl font-bold text-blue-800'>SRTP</h1>
@@ -52,7 +37,7 @@ export default function Header() {
           Vender
         </Link>
 
-        {session.status === 'authenticated' ? (
+        {session.status === 'authenticated' && isAdmin ? (
           <Link
             href='/admin'
             className='mr-4 p-6 text-xl text-blue-700 hover:text-blue-400'
@@ -74,3 +59,5 @@ export default function Header() {
     </nav>
   );
 }
+
+
