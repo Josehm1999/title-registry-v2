@@ -1,44 +1,7 @@
-// import {
-// 	RegionalAdmin,
-// 	regional_admins,
-// } from '../../constants/subgraphQueries';
-// import React, { createContext, useContext } from 'react';
-// import { graphqlClient } from '../pages/_app';
-// import { getSession } from 'next-auth/react';
-// import { env } from '../env/client.mjs';
-// import useSWR from 'swr';
-//
-// type AdminInfo = {
-// 	isAdmin: boolean;
-// 	isRegionalAdmin: boolean;
-// };
-//
-// const DataContext = createContext<any | undefined>(undefined);
-//
-// export function DataProvider({ children }: { children: React.ReactNode }) {
-// 	// const mounted = useIsMounted();
-// 	// if (mounted) {
-// 	// 	console.log(data);
-// 	// }
-// 	const session = await getSession();
-// 	// console.log(result_admins);
-// 	const isAdmin = session!.address == env.NEXT_PUBLIC_ADMIN_ADDRESS;
-// 	const isRegionalAdmin = result_admins.data.regionalAdmins.some(
-// 	  (address) => address.regionalAdmin === session!.address.toLowerCase()
-// 	);
-// 	// const data: AdminInfo = { isAdmin, isRegionalAdmin };
-// 	return <DataContext.Provider value={1}>{children}</DataContext.Provider>;
-// }
-//
-// export function useData(): any {
-// 	const context = useContext(DataContext);
-// 	if (context === undefined) {
-// 		throw new Error('useData must be used within a DataProvider');
-// 	}
-// 	return context;
-// }
-
+import { getSession } from 'next-auth/react';
 import { createContext, useState, useEffect, useContext } from 'react';
+import { RegionalAdmin, RegionalAdmins } from '../../constants/subgraphQueries';
+import { env } from '../env/client.mjs';
 
 type AdminInfo = {
 	isAdmin: boolean;
@@ -55,14 +18,23 @@ export const AdminInfoProvider = ({
 	const [isRegionalAdmin, setIsRegionalAdmin] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
 
+	const fetchData = async () => {
+		const response = await fetch('/api/regionalAdmin');
+		const result_admins: RegionalAdmins = await response.json();
+		const session = await getSession();
+
+		setIsAdmin(session!.address === env.NEXT_PUBLIC_ADMIN_ADDRESS);
+		setIsRegionalAdmin(
+			result_admins.regionalAdmins.some(
+				(address: RegionalAdmin) =>
+					address.regionalAdmin === session?.address.toLowerCase()
+			)
+		);
+	};
+
 	useEffect(() => {
-		const fetchData = async () => {
-			const response = await fetch('/api/regionalAdmin');
-			const data = await response.json();
-			console.log(data);
-		};
 		fetchData();
-	}, []);
+	}, [isRegionalAdmin, isAdmin]);
 
 	return (
 		<AdminInfoContext.Provider value={{ isRegionalAdmin, isAdmin }}>

@@ -1,30 +1,13 @@
 import Link from 'next/link';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { env } from '../env/client.mjs';
 import { useSession } from 'next-auth/react';
 import { useProtected } from '../hooks/useProtected';
-import { regional_admins } from '../../constants/subgraphQueries';
-import { useQuery } from '@apollo/client';
-
-type Props = {
-	isAdmin: boolean;
-	isRegionalAdmin: boolean;
-};
+import { useAdminInfo } from '../context/adminsContext';
 
 export default function Header() {
 	const handleLogout = useProtected();
 	const session = useSession();
-
-	const {
-		loading,
-		error: subgraphQueryError,
-		data: result_admins,
-	} = useQuery(regional_admins);
-
-	const isAdmin = session.data?.address == env.NEXT_PUBLIC_ADMIN_ADDRESS;
-	const isRegionalAdmin = result_admins?.regionalAdmins.some(
-		(address) => address.regionalAdmin === session.data?.address.toLowerCase()
-	);
+	const { isAdmin, isRegionalAdmin } = useAdminInfo();
 
 	return (
 		<nav className='flex flex-row items-center justify-between border-b-2 bg-white p-5'>
@@ -49,10 +32,7 @@ export default function Header() {
 					Vender
 				</Link>
 
-				{!subgraphQueryError &&
-				!loading &&
-				session.status === 'authenticated' &&
-				(isAdmin || isRegionalAdmin) ? (
+				{session.status === 'authenticated' && (isAdmin || isRegionalAdmin) ? (
 					<>
 						<Link
 							href='/admin'
