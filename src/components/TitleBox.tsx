@@ -1,10 +1,9 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import { useMoralis, useWeb3Contract } from 'react-moralis';
 import Image from 'next/image';
-
 import title_registry_abi from '../../constants/TitleRegistry.json';
 import { ethers } from 'ethers';
+
 
 type TitleBoxProps = {
   state: string;
@@ -44,4 +43,4 @@ const TitleBox: NextPage<TitleBoxProps> = ({
   return <div></div>;
 };
 
-export default TitleBox
+export default TitleBox;

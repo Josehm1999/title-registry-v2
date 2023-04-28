@@ -4,51 +4,52 @@ import { RegionalAdmin, RegionalAdmins } from '../../constants/subgraphQueries';
 import { env } from '../env/client.mjs';
 
 type AdminInfo = {
-	isAdmin: boolean;
-	isRegionalAdmin: boolean;
+  isAdmin: boolean;
+  isRegionalAdmin: boolean;
 };
 
 export const AdminInfoContext = createContext<AdminInfo | undefined>(undefined);
 
 export const AdminInfoProvider = ({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) => {
-	const [isRegionalAdmin, setIsRegionalAdmin] = useState(false);
-	const [isAdmin, setIsAdmin] = useState(false);
+  const [isRegionalAdmin, setIsRegionalAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-	const fetchData = async () => {
-		const response = await fetch('/api/regionalAdmin');
-		const result_admins: RegionalAdmins = await response.json();
-		const session = await getSession();
+  const fetchData = async () => {
+    const response = await fetch('/api/regionalAdmin');
+    const result_admins: RegionalAdmins = await response.json();
+    const session = await getSession();
+    if (session) {
+      setIsAdmin(session.address === env.NEXT_PUBLIC_ADMIN_ADDRESS);
+    }
+    setIsRegionalAdmin(
+      result_admins.regionalAdmins.some(
+        (address: RegionalAdmin) =>
+          address.regionalAdmin === session?.address.toLowerCase()
+      )
+    );
+  };
 
-		setIsAdmin(session!.address === env.NEXT_PUBLIC_ADMIN_ADDRESS);
-		setIsRegionalAdmin(
-			result_admins.regionalAdmins.some(
-				(address: RegionalAdmin) =>
-					address.regionalAdmin === session?.address.toLowerCase()
-			)
-		);
-	};
+  useEffect(() => {
+    fetchData();
+  }, [isRegionalAdmin, isAdmin]);
 
-	useEffect(() => {
-		fetchData();
-	}, [isRegionalAdmin, isAdmin]);
-
-	return (
-		<AdminInfoContext.Provider value={{ isRegionalAdmin, isAdmin }}>
-			{children}
-		</AdminInfoContext.Provider>
-	);
+  return (
+    <AdminInfoContext.Provider value={{ isRegionalAdmin, isAdmin }}>
+      {children}
+    </AdminInfoContext.Provider>
+  );
 };
 
 export function useAdminInfo(): any {
-	const context = useContext(AdminInfoContext);
-	if (context === undefined) {
-		throw new Error(
-			'useAdminInfo must be used within a AdminInfoContext.Provider'
-		);
-	}
-	return context;
+  const context = useContext(AdminInfoContext);
+  if (context === undefined) {
+    throw new Error(
+      'useAdminInfo must be used within a AdminInfoContext.Provider'
+    );
+  }
+  return context;
 }

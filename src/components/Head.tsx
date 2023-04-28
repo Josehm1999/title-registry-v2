@@ -20,10 +20,10 @@ export default function Header() {
 					Home
 				</Link>
 				<Link
-					href='/purchase-property'
+					href='/dashboard'
 					className='mr-4 p-6 text-xl text-blue-700 hover:text-blue-400'
 				>
-					Comprar
+                    Dashboard
 				</Link>
 				<Link
 					href='/sell-property'
