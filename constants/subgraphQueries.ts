@@ -1,95 +1,96 @@
 import { gql, TypedDocumentNode } from '@apollo/client';
 
 export type RegionalAdmins = {
-  regionalAdmins: RegionalAdmin[];
+	regionalAdmins: RegionalAdmin[];
 };
 
 export type RegionalAdmin = {
-  type_name: string;
-  id: string;
-  regionalAdmin: string;
-  district: string;
+	type_name: string;
+	id: string;
+	regionalAdmin: string;
+	district: string;
 };
 
 export type PropertyListeds = {
-  propertyListeds: ListedProperty[];
+	propertyListeds: ListedProperty[];
 };
 
 export type ListedProperty = {
-  id: string;
-  state: string;
-  neighborhood: string;
-  surveyNumber: string;
-  seller: string;
-  marketValue: string;
-  isAvailable: boolean;
-  requester: string;
-  ReqStatus: string;
-  updatedAt: string;
+	id: string;
+	state: string;
+	district: string;
+	neighborhood: string;
+	surveyNumber: string;
+	seller: string;
+	marketValue: string;
+	isAvailable: boolean;
+	requester: string;
+	ReqStatus: string;
+	updatedAt: string;
 };
 
 export type BoughtProperties = {
-  bought_properties: BoughtPropertie[];
+	bought_properties: BoughtPropertie[];
 };
 
 export type BoughtPropertie = {
-  id: string;
-  seller: string;
-  buyer: string;
-  surveyNumber: string;
-  marketValue: string;
-  updatedAt: string;
+	id: string;
+	seller: string;
+	buyer: string;
+	surveyNumber: string;
+	marketValue: string;
+	updatedAt: string;
 };
 
 export const listed_properties: TypedDocumentNode<
-  PropertyListeds,
-  ListedProperty
+	PropertyListeds,
+	ListedProperty
 > = gql`
-  {
-    propertyListeds(
-      first: 5
-      where: { requester: "0x0000000000000000000000000000000000000000" }
-    ) {
-      id
-      state
-      district
-      neighborhood
-      surveyNumber
-      seller
-      marketValue
-      isAvailable
-      requester
-      ReqStatus
-      updatedAt
-    }
-  }
+	{
+		propertyListeds(
+			first: 5
+			where: { requester: "0x0000000000000000000000000000000000000000" }
+		) {
+			id
+			state
+			district
+			neighborhood
+			surveyNumber
+			seller
+			marketValue
+			isAvailable
+			requester
+			ReqStatus
+			updatedAt
+		}
+	}
 `;
 
 export const bought_properties: TypedDocumentNode<
-  BoughtProperties,
-  BoughtProperties
+	BoughtProperties,
+	BoughtProperties
 > = gql`
-  {
-    propertyBoughts(first: 5) {
-      id
-      seller
-      buyer
-      surveyNumber
-      marketValue
-      updatedAt
-    }
-  }
+	{
+		propertyBoughts(first: 5) {
+			id
+			seller
+			buyer
+			surveyNumber
+			marketValue
+			updatedAt
+		}
+	}
 `;
 
 export const regional_admins: TypedDocumentNode<
-  RegionalAdmins,
-  RegionalAdmin
+	RegionalAdmins,
+	RegionalAdmin
 > = gql`
-  {
-    regionalAdmins(first: 5) {
-      id
-      regionalAdmin
-      district
-    }
-  }
+	{
+		regionalAdmins(first: 5) {
+			id
+			regionalAdmin
+			district
+		}
+	}
 `;
