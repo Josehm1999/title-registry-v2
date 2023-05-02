@@ -1,5 +1,4 @@
-import { NextPageContext } from 'next';
-import { getSession } from 'next-auth/react';
+import Sidebar from '../components/Sidebar';
 import Image from 'next/image';
 import HouseLogo from '../../public/images/house-logo-unsplash.jpg';
 import {
@@ -14,7 +13,7 @@ const PropertyTitleCard = ({
   listed_property: ListedProperty;
 }) => {
   return (
-    <div className='card glass card-compact mx-5 my-5 flex w-96 justify-center bg-base-100 shadow-xl'>
+    <div className='card flex w-80 bg-slate-800 shadow-xl mt-3'>
       <figure>
         <Image src={HouseLogo} alt={'House-Logo'} width={210} height={235} />
       </figure>
@@ -33,7 +32,7 @@ const PropertyTitleCard = ({
           <br />
         </p>
         <div className='card-actions justify-end'>
-          <button className='btn-primary btn'>Hacer oferta</button>
+          <button className='btn-info btn text-white'>Hacer oferta</button>
         </div>
       </div>
     </div>
@@ -63,13 +62,15 @@ export default function Dashboard({
   propertyTitles: ListedProperty[];
 }) {
   return (
-    <main className='grid bg-black text-white md:grid-cols-3'>
-      <PropertyTitles propertyTitles={propertyTitles}></PropertyTitles>
-    </main>
+    <Sidebar>
+      <main className='grid grid-cols-1 justify-items-center gap-4 text-white sm:grid-cols-2 lg:grid-cols-4'>
+        <PropertyTitles propertyTitles={propertyTitles}></PropertyTitles>
+      </main>
+    </Sidebar>
   );
 }
 
-export async function getServerSideProps(context: NextPageContext) {
+export async function getServerSideProps() {
   try {
     const result_properties = await graphqlClient.query({
       query: listed_properties,

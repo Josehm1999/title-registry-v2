@@ -70,19 +70,19 @@ export default function RegionalAdminForm(props: { titleAddress: string }) {
 	}, [reset, isSubmitSuccessful, formState]);
 
 	return (
-		<div className='card mt-4 w-2/4 bg-white shadow-xl'>
+		<div className='card mt-4 w-2/4 bg-base-300 shadow-xl'>
 			<form
 				onSubmit={handleSubmitAdmin(onSubmitAdmin)}
 				className='px-8 pt-6 pb-8'
 			>
-				<h3 className='pt-4 text-center text-lg font-bold text-gray-700'>
+				<h3 className='pt-4 text-center text-lg font-bold text-white'>
 					Registra una nuevo administrador regional
 				</h3>
 				<div className='mb-4 md:flex md:justify-between'>
 					<div className='mb-2 w-full md:mr-2 md:mb-0'>
 						<label
 							htmlFor='superAdmin'
-							className='text-md mb-2 block font-bold text-gray-700'
+							className='text-md mb-2 block font-bold text-white'
 						>
 							Dirección (ethereum)
 						</label>
@@ -102,7 +102,7 @@ export default function RegionalAdminForm(props: { titleAddress: string }) {
 					<div className='mb-2 md:mr-2 md:mb-0'>
 						<label
 							htmlFor='district'
-							className='text-md mb-2 block font-bold text-gray-700'
+							className='text-md mb-2 block font-bold text-white'
 						>
 							Distrito:
 						</label>
@@ -123,12 +123,12 @@ export default function RegionalAdminForm(props: { titleAddress: string }) {
 					{' '}
 					<button
 						type='submit'
-						className='focus:shadow-outline w-full rounded-full bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none'
+						className='focus:shadow-outline w-full rounded-full btn btn-outline px-4 py-2 font-bold text-gray-400 hover:border-white hover:text-white focus:outline-none'
 					>
 						{isLoading ? 'Enviando...' : 'Enviar'}
 					</button>
 					{isSuccess && (
-						<div className='text-gray-700'>
+						<div className='text-white'>
 							Se creo con exito! -
 							<a
 								href={`https://etherscan.io/tx/${data_from_contract?.hash}`}

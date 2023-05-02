@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @keyframes pulse {
   from {
     transform: scale3d(1, 1, 1);
@@ -24,3 +23,15 @@
   animation-iteration-count: infinite;
 }
 
+
+.drawer-content-custom {
+  z-index: 0;
+  overflow-y: auto;
+  transition-property: all;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-outline {
+    @apply hover:bg-transparent
+}

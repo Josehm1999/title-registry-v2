@@ -3,7 +3,7 @@ type Props = {};
 
 export default function Footer(props: Props) {
   return (
-    <div className='bg-black p-2 text-center font-semibold text-white' >
+    <div className='bg-base-300 p-2 text-center font-semibold text-white' >
       Creado por:{' '}
       <Link
         href={'https://github.com/Josehm1999'}

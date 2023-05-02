@@ -29,7 +29,7 @@ export default function Layout({ children, meta: pageMeta }: Props) {
       </Head>
       <div className='flex min-h-screen flex-col'>
         <Navbar />
-        <main className='flex-1 bg-black'>{children}</main>
+        <main className='flex-1 bg-base-100'>{children}</main>
         <Footer />
       </div>
     </>

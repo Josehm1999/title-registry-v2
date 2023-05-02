@@ -1,19 +1,12 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
-import HouseIcon from '../../public/images/house-icon.png';
+import { RiCommunityLine } from 'react-icons/ri';
 
 const Home: NextPage = () => {
   return (
     <main className='my-[7vh] mx-auto w-full max-w-4xl md:my-[10vh]'>
       <div className='container mx-auto flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8'>
-        <Image
-          src={HouseIcon}
-          alt={'House-Logo'}
-          width={65}
-          height={65}
-          className='pulse h-24 w-24 cursor-pointer select-none opacity-80 grayscale hue-rotate-15 transition hover:opacity-100 hover:brightness-125 hover:grayscale-0'
-        />
+        <RiCommunityLine className='pulse h-32 w-32 cursor-pointer select-none hue-rotate-15 transition brightness-125 ' />
         <div className='mb-8'></div>
         <div className='text-center'>
           <h1 className='text-4xl font-extrabold text-white sm:text-5xl md:text-6xl'>
@@ -22,7 +15,7 @@ const Home: NextPage = () => {
           </h1>
           <h1 className='text-4xl font-extrabold text-white sm:text-5xl md:text-6xl'></h1>
           <p className='mx-auto mt-3 max-w-4xl text-xl text-gray-500 sm:mt-4'>
-            Realiza tus transacciones de titulos de propiedad de manera segura y
+            Realiza tus transacciones de títulos de propiedad de manera segura y
             transparente y gracias a la tecnología blockchain.
           </p>
           <div className='mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center'>

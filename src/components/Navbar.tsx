@@ -10,24 +10,24 @@ export default function Navbar() {
   const { isAdmin, isRegionalAdmin } = useAdminInfo();
 
   return (
-    <nav className='flex flex-row items-center justify-between bg-black p-5'>
+    <nav className='flex flex-row items-center justify-between bg-base-300 p-5'>
       <h1 className='py-4 px-4 text-3xl font-bold text-white'>SRTP</h1>
       <div className='flex flex-row items-center'>
         <Link
           href='/'
-          className='mr-4 p-6 text-xl text-gray-700 transition delay-100 ease-in-out hover:text-white'
+          className='mr-4 p-6 text-xl text-white transition delay-100 ease-in-out hover:text-white'
         >
           Home
         </Link>
         <Link
           href='/marketplace'
-          className='mr-4 p-6 text-xl text-gray-700 transition delay-100 ease-in-out hover:text-white'
+          className='mr-4 p-6 text-xl text-white transition delay-100 ease-in-out hover:text-white'
         >
           Explora
         </Link>
         <Link
           href='/sell-property'
-          className='mr-4 p-6 text-xl text-gray-700 transition delay-100 ease-in-out hover:text-white'
+          className='mr-4 p-6 text-xl text-white transition delay-100 ease-in-out hover:text-white'
         >
           Vender
         </Link>
@@ -36,7 +36,7 @@ export default function Navbar() {
           <>
             <Link
               href='/admin'
-              className='mr-4 p-6 text-xl text-gray-700 transition delay-100 ease-in-out hover:text-white'
+              className='mr-4 p-6 text-xl text-white transition delay-100 ease-in-out hover:text-white'
             >
               Admin
             </Link>
