@@ -3,35 +3,41 @@
 @tailwind utilities;
 
 @keyframes pulse {
-  from {
-    transform: scale3d(1, 1, 1);
-  }
+	from {
+		transform: scale3d(1, 1, 1);
+	}
 
-  50% {
-    transform: scale3d(1.2, 1.2, 1.2);
-  }
+	50% {
+		transform: scale3d(1.2, 1.2, 1.2);
+	}
 
-  to {
-    transform: scale3d(1, 1, 1);
-  }
+	to {
+		transform: scale3d(1, 1, 1);
+	}
 }
 
 .pulse {
-  animation-name: pulse;
-  animation-duration: 4s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+	animation-name: pulse;
+	animation-duration: 4s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
 }
 
-
 .drawer-content-custom {
-  z-index: 0;
-  overflow-y: auto;
-  transition-property: all;
-  transition-duration: 300ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	z-index: 0;
+	overflow-y: auto;
+	transition-property: all;
+	transition-duration: 300ms;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.drawer-side-custom {
+	grid-column-start: 1;
+	grid-row-start: 1;
+	display: grid;
+	overflow-x: hidden;
 }
 
 .btn-outline {
-    @apply hover:bg-transparent
+	@apply hover:bg-transparent;
 }
