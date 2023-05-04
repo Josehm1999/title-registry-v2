@@ -11,7 +11,7 @@ export default function Navbar() {
 
   return (
     <nav className='flex flex-row items-center justify-between bg-base-300 p-5'>
-      <h1 className='py-4 px-4 text-3xl font-bold text-white'>SRTP</h1>
+      <h1 className='py-4 px-4 text-3xl font-bold text-white'>Sunarpcito</h1>
       <div className='flex flex-row items-center'>
         <Link
           href='/'
