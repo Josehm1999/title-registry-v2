@@ -5,8 +5,9 @@ import {
 } from '../../constants/subgraphQueries';
 import { graphqlClient } from './_app';
 import { PropertyTitles } from '../components/PropertyTitleCard';
+import { getSession } from 'next-auth/react';
 
-export default function Marketplace({
+export default function Dashboard({
 	propertyTitles,
 }: {
 	propertyTitles: ListedProperty[];
@@ -22,11 +23,12 @@ export default function Marketplace({
 
 export async function getServerSideProps() {
 	try {
+		const session = await getSession();
 		const result_properties = await graphqlClient.query({
 			query: listed_properties,
-			variables: {
-				owner_address: '0x0000000000000000000000000000000000000000',
-			},
+			// variables: {
+			// 	owner_address: session?.address!,
+			// },
 		});
 		const propertyTitles = result_properties.data.propertyListeds;
 		return {

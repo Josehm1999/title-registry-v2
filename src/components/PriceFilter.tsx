@@ -19,36 +19,46 @@ export default function PriceFilter() {
 	};
 
 	return (
-		<div className='p-5 grid '>
-			<form action=''>
-				<div className='input-filters'>
-					<div className='input-group'>
-						<input
-							type='text'
-							inputMode='numeric'
-							id='min-price'
-							value={minPrice}
-							onChange={handleMinPriceChange}
-							placeholder='$ Min'
-							min={'0'}
-						/>
-					</div>
-					<div className='input-group'>
-						<input
-							type='text'
-							inputMode='numeric'
-							id='max-price'
-							value={maxPrice}
-							onChange={handleMaxPriceChange}
-							placeholder='$ Max'
-							min={'0'}
-						/>
-					</div>
+		<form action='' className='grid gap-4'>
+			<div className='flex items-center gap-3'>
+				<div className=''>
+					<input
+						type='text'
+						inputMode='numeric'
+						id='min-price'
+						value={minPrice}
+						onChange={handleMinPriceChange}
+						placeholder='$ Min'
+						min={'0'}
+						className={
+							'h-9 w-full rounded-xl bg-white py-3 px-2 text-lg leading-none text-black '
+						}
+					/>
 				</div>
-				<div>
-					<button onClick={handleFilterClick}>Filter</button>
+				<span>a</span>
+				<div className=''>
+					<input
+						type='text'
+						inputMode='numeric'
+						id='max-price'
+						value={maxPrice}
+						onChange={handleMaxPriceChange}
+						placeholder='$ Max'
+						min={'0'}
+						className={
+							'h-9 w-full rounded-xl bg-white py-3 px-2 text-lg leading-none text-black '
+						}
+					/>
 				</div>
-			</form>
-		</div>
+			</div>
+			<div>
+				<button
+					onClick={handleFilterClick}
+					className='btn-info" btn-outline btn h-7 min-h-8'
+				>
+					Aplicar
+				</button>
+			</div>
+		</form>
 	);
 }

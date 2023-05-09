@@ -12,7 +12,7 @@ import { env } from '../env/client.mjs';
 import Head from 'next/head';
 import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
 import '@rainbow-me/rainbowkit/styles.css';
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { goerli } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
@@ -58,7 +58,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
       <WagmiConfig client={clientWagmi}>
         <SessionProvider session={pageProps.session} refetchInterval={0}>
           <RainbowKitSiweNextAuthProvider>
-            <RainbowKitProvider chains={chains}>
+            <RainbowKitProvider chains={chains} theme={darkTheme()}>
               <ApolloProvider client={graphqlClient}>
                 <AdminInfoProvider>
                   <Layout>

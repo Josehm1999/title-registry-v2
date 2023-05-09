@@ -38,6 +38,6 @@
 	overflow-x: hidden;
 }
 
-.btn-outline {
-	@apply hover:bg-transparent;
-}
+/* .btn-outline { */
+/* 	@apply hover:bg-transparent; */
+/* } */

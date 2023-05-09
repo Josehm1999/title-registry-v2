@@ -44,12 +44,12 @@ export default function Navbar({ children }: { children: ReactNode }) {
 							<li className='pt-2'>
 								<div className='flex-col'>
 									<div
-										className='w-full '
+										className='w-full text-base lg:text-lg'
 										onClick={() =>
 											setIsExpandedEstadoPropiedad(!isExpandedEstadoPropiedad)
 										}
 									>
-										Estado de propiedad
+										Estado
 										<FaChevronDown
 											className={`delay-400 float-right mt-1 h-5 w-5 transition-all duration-500 ${
 												isExpandedEstadoPropiedad ? 'rotate-180' : ''
@@ -76,9 +76,9 @@ export default function Navbar({ children }: { children: ReactNode }) {
 								</div>
 							</li>
 							<li className='pt-2'>
-								<div className='flex-col'>
+								<div className='flex flex-col'>
 									<div
-										className='w-full '
+										className='w-full text-base lg:text-lg'
 										onClick={() => setIsExpandedPrecio(!isExpandedPrecio)}
 									>
 										Precio
@@ -89,7 +89,7 @@ export default function Navbar({ children }: { children: ReactNode }) {
 										/>
 									</div>
 									<div
-										className={`grid w-full gap-4 ${
+										className={`w-full ${
 											isExpandedPrecio ? '' : 'hidden'
 										}`}
 									>
@@ -97,10 +97,11 @@ export default function Navbar({ children }: { children: ReactNode }) {
 									</div>
 								</div>
 							</li>
+
 							<li className='pt-2'>
 								<div className='flex-col'>
 									<div
-										className='w-full '
+										className='w-full text-base lg:text-lg'
 										onClick={() => setIsExpandedCategoria(!isExpandedCategoria)}
 									>
 										Categoría

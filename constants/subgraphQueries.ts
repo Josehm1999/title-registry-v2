@@ -42,15 +42,16 @@ export type BoughtPropertie = {
 	updatedAt: string;
 };
 
+type SearchPropertysVars = {
+	owner_address: string;
+};
+
 export const listed_properties: TypedDocumentNode<
 	PropertyListeds,
-	ListedProperty
+	SearchPropertysVars
 > = gql`
-	{
-		propertyListeds(
-			first: 5
-			where: { requester: "0x0000000000000000000000000000000000000000" }
-		) {
+	query GetListedProperties($owner_address: Bytes) {
+		propertyListeds(first: 5, where: { seller: $owner_address }) {
 			id
 			state
 			district
