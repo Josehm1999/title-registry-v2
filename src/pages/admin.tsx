@@ -10,14 +10,8 @@ import networkMapping from '../../constants/networkMapping.json';
 import { graphqlClient } from './_app';
 import { regional_admins } from '../../constants/subgraphQueries';
 import { Session } from 'next-auth';
+import { contractAddressesInterface } from '../types/utility.js';
 
-type contractAddressesInterface = {
-	[key: string]: contractAddressesTitleInterface;
-};
-
-type contractAddressesTitleInterface = {
-	[key: string]: string[];
-};
 
 type Props = {
 	session?: Session;
