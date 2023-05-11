@@ -10,9 +10,16 @@ import {
 } from '@apollo/client';
 import { env } from '../env/client.mjs';
 import Head from 'next/head';
-import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
+import {
+  GetSiweMessageOptions,
+  RainbowKitSiweNextAuthProvider,
+} from '@rainbow-me/rainbowkit-siwe-next-auth';
 import '@rainbow-me/rainbowkit/styles.css';
-import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import {
+  darkTheme,
+  getDefaultWallets,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { goerli } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
@@ -47,6 +54,10 @@ const clientWagmi = createClient({
   provider,
 });
 
+const getSiweMessageOptions: GetSiweMessageOptions = () => ({
+  statement: 'Verifica tu cuenta para poder continuar',
+});
+
 const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
   return (
     <>
@@ -57,7 +68,9 @@ const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
       </Head>
       <WagmiConfig client={clientWagmi}>
         <SessionProvider session={pageProps.session} refetchInterval={0}>
-          <RainbowKitSiweNextAuthProvider>
+          <RainbowKitSiweNextAuthProvider
+            getSiweMessageOptions={getSiweMessageOptions}
+          >
             <RainbowKitProvider chains={chains} theme={darkTheme()}>
               <ApolloProvider client={graphqlClient}>
                 <AdminInfoProvider>
