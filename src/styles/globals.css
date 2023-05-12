@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes pulse {
+@keyframes pulse3d {
 	from {
 		transform: scale3d(1, 1, 1);
 	}
@@ -16,8 +16,8 @@
 	}
 }
 
-.pulse {
-	animation-name: pulse;
+.pulse3d {
+	animation-name: pulse3d;
 	animation-duration: 4s;
 	animation-timing-function: ease-in-out;
 	animation-iteration-count: infinite;

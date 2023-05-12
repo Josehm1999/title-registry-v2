@@ -6,7 +6,7 @@ const Home: NextPage = () => {
   return (
     <main className='my-[7vh] mx-auto w-full max-w-4xl md:my-[10vh]'>
       <div className='container mx-auto flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8'>
-        <RiCommunityLine className='pulse h-32 w-32 cursor-pointer select-none hue-rotate-15 transition brightness-125 ' />
+        <RiCommunityLine className='pulse3d h-32 w-32 cursor-pointer select-none hue-rotate-15 transition brightness-125 ' />
         <div className='mb-8'></div>
         <div className='text-center'>
           <h1 className='text-4xl font-extrabold text-white sm:text-5xl md:text-6xl'>
