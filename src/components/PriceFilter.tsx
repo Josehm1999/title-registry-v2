@@ -54,7 +54,7 @@ export default function PriceFilter() {
 			<div>
 				<button
 					onClick={handleFilterClick}
-					className='btn-info" btn-outline btn h-7 min-h-8'
+					className='btn-outline btn h-7 min-h-8'
 				>
 					Aplicar
 				</button>

@@ -1,9 +1,6 @@
-import {
-  ListedProperty,
-} from '../../constants/subgraphQueries';
+import { ListedProperty } from '../../constants/subgraphQueries';
 import { PropertyCardBuyer } from './PropertyCardBuyer';
 import { PropertyCardSeller } from './PropertyCardSeller';
-
 
 const PageNames = ['Marketplace', 'Dashboard'] as const;
 
