@@ -9,6 +9,6 @@ export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse<RegionalAdmins>
 ) {
-  const result_admins = await graphqlClient.query({ query: regional_admins });
-  return res.status(200).json(result_admins.data);
+    const result_admins = await graphqlClient.query({ query: regional_admins });
+    return res.status(200).json(result_admins.data);
 }

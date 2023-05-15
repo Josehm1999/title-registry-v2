@@ -83,14 +83,14 @@ export const PropertyCardSeller = ({
     abi: titleAbi,
     functionName: 'processRequest',
     args: [parseInt(listed_property.surveyNumber), 3],
-    enabled: !(listed_property.ReqStatus.toString() != '0'),
+    enabled: !(listed_property.ReqStatus.toString() == '1'),
   });
 
   const {
     data: data_accept_offer,
     write: accept_offer,
     error: error_accept_offer,
-  } = useContractWrite(config_unavailable);
+  } = useContractWrite(config_accept_offer);
 
   const {
     isLoading: isLoading_accept_offer,
@@ -104,7 +104,7 @@ export const PropertyCardSeller = ({
     if (isSuccess || isSuccess_unavailable) {
       setPropertyStatus(!listed_property.isAvailable);
     }
-  }, [isSuccess, isSuccess_unavailable]);
+  }, [isSuccess, isSuccess_unavailable, isSuccess_accept_offer]);
 
   function change_availability() {
     if (propertyStatus) {
@@ -132,7 +132,11 @@ export const PropertyCardSeller = ({
           loading='lazy'
         />
         <button
-          className={`${ listed_property.ReqStatus != '0' ? 'cursor-not-allowed bg-gray-400' : ''} absolute bottom-0 right-0  bg-white px-4 py-2 font-bold text-gray-800`}
+          className={`${
+            listed_property.ReqStatus != '0'
+              ? 'cursor-not-allowed bg-gray-400'
+              : ''
+          } absolute bottom-0 right-0  bg-white px-4 py-2 font-bold text-gray-800`}
           disabled={
             !make_available ||
             !make_unavailable ||
@@ -180,6 +184,14 @@ export const PropertyCardSeller = ({
             {'Estado: ' + (propertyStatus ? 'Disponible' : 'No listado')}
           </span>
           <br />
+          <span
+            className={`${
+              isLoading || isLoading_unavailable ? loading_shorthand : ''
+            }`}
+          >
+            {'Estado de transacción: ' + listed_property.ReqStatus}
+          </span>
+          <br />
         </p>
         <div className='flex flex-col gap-2 pt-2'>
           <p className='pt-2 font-bold text-white'>
@@ -191,7 +203,7 @@ export const PropertyCardSeller = ({
               ${listed_property.marketValue}
             </span>
           </p>
-          {listed_property.ReqStatus.toString() != '0' && (
+          {listed_property.ReqStatus.toString() == '1' && (
             <>
               <button
                 className='btn-outline btn-success min-h-8 btn h-7'
@@ -214,7 +226,7 @@ export const PropertyCardSeller = ({
           Error: {(prepareError_unavailable || error_unavailable)?.message}
         </div>
       )}
-      {isError_accept_offer ||
+      {isPrepareError_accept_offer ||
         (prepareError_accept_offer && (
           <div>
             Error: {(prepareError_accept_offer || error_accept_offer)?.message}

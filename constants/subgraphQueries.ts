@@ -51,7 +51,7 @@ export const listed_properties: TypedDocumentNode<
   SearchPropertysVars
 > = gql`
   query GetListedProperties($owner_address: Bytes) {
-    propertyListeds(where: { requester: $owner_address, isAvailable: true }) {
+    propertyListeds(where: { isAvailable: true }) {
       id
       state
       district

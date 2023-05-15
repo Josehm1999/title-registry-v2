@@ -54,7 +54,7 @@ export async function getServerSideProps(context: NextPageContext) {
       query: listed_properties_by_user,
       variables: {
         owner_address: session?.address!,
-      },
+      }
     });
     const propertyTitles = result_properties.data.propertyListeds;
     return {

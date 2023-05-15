@@ -24,18 +24,40 @@ export const PropertyCardBuyer = ({
   const session = useSession();
   const user_is_owner =
     listed_property.seller === session.data?.address.toLowerCase();
+
   const { config } = usePrepareContractWrite({
     address: `0x${contractAddress.substring(2, contractAddress.length)}`,
     abi: titleAbi,
     functionName: 'requestToLandOwner',
     args: [parseInt(listed_property.surveyNumber)],
-    enabled: !user_is_owner,
+    enabled: !user_is_owner && session.status === 'authenticated',
   });
 
   const { data: data_from_contract, write: request_land } =
     useContractWrite(config);
 
   const { isLoading, isSuccess, isError } = useWaitForTransaction({
+    hash: data_from_contract?.hash,
+  });
+
+  const { config: config_buy_property } = usePrepareContractWrite({
+    address: `0x${contractAddress.substring(2, contractAddress.length)}`,
+    abi: titleAbi,
+    functionName: 'buyProperty',
+    args: [parseInt(listed_property.surveyNumber)],
+    enabled:
+      listed_property.ReqStatus.toString() === '3' &&
+      session.status === 'authenticated',
+  });
+
+  const { data: data_buy_property, write: buy_property } =
+    useContractWrite(config_buy_property);
+
+  const {
+    isLoading: is_loading_buy_property,
+    isSuccess: is_success_buy_property,
+    isError: is_error_buy_property,
+  } = useWaitForTransaction({
     hash: data_from_contract?.hash,
   });
 
@@ -51,9 +73,11 @@ export const PropertyCardBuyer = ({
         />
         <button
           className={`${
-            user_is_owner ? 'bg-gray-400 cursor-not-allowed' : 'bg-white'
+            user_is_owner || listed_property.ReqStatus != '0'
+              ? 'cursor-not-allowed bg-gray-400'
+              : 'bg-white'
           } absolute bottom-0 right-0 px-4 py-2 font-bold text-gray-800`}
-          disabled={user_is_owner}
+          disabled={user_is_owner || listed_property.ReqStatus != '0'}
           onClick={() => request_land?.()}
         >
           Hacer oferta{' '}
@@ -77,9 +101,21 @@ export const PropertyCardBuyer = ({
           </span>
           <br />
         </p>
-        <p className='mt-2 font-bold text-white'>
-          ${listed_property.marketValue}
-        </p>
+        <div className='flex justify-between pt-2'>
+          <p className='pt-2 font-bold text-white'>
+            ${listed_property.marketValue}
+          </p>
+          {listed_property.ReqStatus.toString() === '3' &&
+            (session.status === 'authenticated' && (
+              <button
+                className='btn-outline btn-success min-h-8 btn h-7'
+                // disabled={!buy_property}
+                onClick={() => buy_property?.()}
+              >
+                Comprar
+              </button>
+            ))}
+        </div>
       </div>
     </div>
   );
