@@ -10,6 +10,7 @@ import networkMapping from '../../constants/networkMapping.json';
 import Image from 'next/image';
 import HouseLogo from '../../public/images/house-unsplash.jpg';
 import { useSession } from 'next-auth/react';
+import { ethers } from 'ethers';
 
 export const PropertyCardBuyer = ({
   listed_property,
@@ -44,7 +45,14 @@ export const PropertyCardBuyer = ({
     address: `0x${contractAddress.substring(2, contractAddress.length)}`,
     abi: titleAbi,
     functionName: 'buyProperty',
-    args: [parseInt(listed_property.surveyNumber)],
+    args: [
+      parseInt(listed_property.surveyNumber),
+      {
+        value: ethers.utils
+          .parseEther(listed_property.marketValue)
+          .add(ethers.utils.parseEther(listed_property.marketValue)),
+      },
+    ],
     enabled:
       listed_property.ReqStatus.toString() === '3' &&
       session.status === 'authenticated',
@@ -106,7 +114,7 @@ export const PropertyCardBuyer = ({
             ${listed_property.marketValue}
           </p>
           {listed_property.ReqStatus.toString() === '3' &&
-            (session.status === 'authenticated' && (
+            session.status === 'authenticated' && (
               <button
                 className='btn-outline btn-success min-h-8 btn h-7'
                 // disabled={!buy_property}
@@ -114,7 +122,7 @@ export const PropertyCardBuyer = ({
               >
                 Comprar
               </button>
-            ))}
+            )}
         </div>
       </div>
     </div>
