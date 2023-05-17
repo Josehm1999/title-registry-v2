@@ -11,6 +11,7 @@ import { useAccount, useDisconnect } from 'wagmi';
 import { useEffect } from 'react';
 import { useIsMounted } from '../hooks/isMounted';
 import { Session } from 'next-auth';
+import RetrieveFunds from '../components/RetrieveFunds';
 
 export default function Dashboard({
   propertyTitles,
@@ -37,6 +38,7 @@ export default function Dashboard({
 
   return (
     <Sidebar>
+      <RetrieveFunds session={session} />
       <main className='mt-6 mr-6 grid grid-cols-1 gap-x-6 gap-y-10 text-white sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 '>
         <PropertyTitles
           propertyTitles={propertyTitles}
@@ -50,11 +52,22 @@ export default function Dashboard({
 export async function getServerSideProps(context: NextPageContext) {
   try {
     const session = await getSession(context);
+
+    if (!session) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+        props: {},
+      };
+    }
+
     const result_properties = await graphqlClient.query({
       query: listed_properties_by_user,
       variables: {
         owner_address: session?.address!,
-      }
+      },
     });
     const propertyTitles = result_properties.data.propertyListeds;
     return {

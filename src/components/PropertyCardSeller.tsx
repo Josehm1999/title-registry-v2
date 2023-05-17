@@ -11,6 +11,7 @@ import titleAbi from '../../constants/TitleRegistry.json';
 import networkMapping from '../../constants/networkMapping.json';
 import Image from 'next/image';
 import HouseLogo from '../../public/images/house-unsplash.jpg';
+import { ethers } from 'ethers';
 
 export const PropertyCardSeller = ({
   listed_property,
@@ -200,7 +201,7 @@ export const PropertyCardSeller = ({
                 isLoading || isLoading_unavailable ? loading_shorthand : ''
               }`}
             >
-              ${listed_property.marketValue}
+              ${ethers.utils.formatEther(listed_property.marketValue) + ' eth'}
             </span>
           </p>
           {listed_property.ReqStatus.toString() == '1' && (
